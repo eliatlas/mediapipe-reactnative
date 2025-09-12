@@ -10,6 +10,8 @@ import {
 import { RNMediapipe, switchCamera } from '@thinksys/react-native-mediapipe';
 
 export default function App() {
+  const { width, height } = Dimensions.get('window');
+
   const onFlip = () => {
     switchCamera();
   };
@@ -22,8 +24,8 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <RNMediapipe
         style={styles.tsMediapipeView}
-        width={Dimensions.get('window').width}
-        height={300}
+        width={width}
+        height={height}
         onLandmark={handleLandmark}
         face={true}
         leftArm={true}
@@ -35,6 +37,7 @@ export default function App() {
         rightLeg={true}
         leftAnkle={true}
         rightAnkle={true}
+        frameLimit={25} // ios only(set the frame rate during initialization)
       />
       <TouchableOpacity onPress={onFlip} style={styles.btnView}>
         <Text style={styles.btnTxt}>Switch Camera</Text>
@@ -49,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   btnView: {
-    width: 100,
+    width: 150,
     height: 60,
     backgroundColor: 'green',
     padding: 8,
@@ -57,6 +60,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
+    position: 'absolute',
+    bottom: 42,
   },
   btnTxt: { color: 'white' },
   tsMediapipeView: {
